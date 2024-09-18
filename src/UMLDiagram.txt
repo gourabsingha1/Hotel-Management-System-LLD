@@ -1,0 +1,80 @@
+---------------------------------------------------
+|                HotelManagementSystem            |
+---------------------------------------------------
+| + listProperties()                              |
+| + makeBooking(Customer, Property, Date, Date)   |
+---------------------------------------------------
+                    |
+                 Has-a
+                    |
+   ----------------------------------------
+   |                                      |
+---------------                  -------------------
+|   Property   |                  |    Booking     |
+---------------                  -------------------
+| + id: int    |                  | + id: int      |
+| + name: String|                 | + customer: Customer|
+| + location: String|             | + property: Property |
+| + getDetails()|                 | + checkInDate: Date   |
+---------------                  | + checkOutDate: Date  |
+       ^                          -------------------
+       |                                   |
+      Is-a                               Has-a
+       |                                   |
+---------------                  -------------------
+|    Room      |                  |    Payment      |
+---------------                  -------------------
+| + roomNumber: int |             | + id: int       |
+| + type: String    |             | + booking: Booking|
+| + price: double   |             | + amount: double |
+| + isAvailable: bool|            | + processor: PaymentProcessor |
+| + getDetails()    |             | + processPayment()           |
+---------------                  -------------------
+       ^
+       | Is-a
+       |
+-------------------
+|   Apartment    |
+-------------------
+| + apartmentNumber: int |
+| + numberOfRooms: int   |
+| + getDetails()         |
+-------------------
+
+---------------------------------------------------
+|                Customer                        |
+---------------------------------------------------
+| + id: int                                      |
+| + name: String                                 |
+| + email: String                                |
+| + searchProperties()                           |
+---------------------------------------------------
+
+---------------------------------------------------
+|             PaymentProcessor (interface)       |
+---------------------------------------------------
+| + process(amount: double)                      |
+---------------------------------------------------
+                    | (Implements)
+   ---------------------------------------
+   |                                     |
+---------------------            ---------------------
+|  CreditCardProcessor |          |   PaypalProcessor  |
+---------------------            ---------------------
+| + process(amount: double) |    | + process(amount: double) |
+---------------------            ---------------------
+
+---------------------------------------------------
+|             Discount (abstract Decorator)       |
+---------------------------------------------------
+| + processor: PaymentProcessor                   |
+| + applyDiscount()                               |
+---------------------------------------------------
+                    | (Extends)
+   ---------------------------------------
+   |                                     |
+------------------------          ------------------------
+|   SeasonalDiscount     |         |    ReferralDiscount   |
+------------------------          ------------------------
+| + applyDiscount()      |         | + applyDiscount()     |
+------------------------          ------------------------
